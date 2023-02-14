@@ -1,4 +1,4 @@
-# viewforstudent
+# vue_student
 
 ## Project setup
 ```
