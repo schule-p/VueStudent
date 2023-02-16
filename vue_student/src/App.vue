@@ -1,6 +1,7 @@
 <template>
   <div class="head">
     <h2>Байтиксы студентов</h2>
+    <button class="AddStudent" @click="AddStudent">+</button>
   </div>
 
   <div class="students">
@@ -8,7 +9,7 @@
     <div class="students-item_name">
       <h3>{{ value.studentName }}</h3>
     </div>
-    <button class="students-item_plus10">+10B</button>
+    <button class="students-item_plus10" @click="Plus10PointsStudent">+10B</button>
     <span class="students-item_points">{{value.points}}</span>
     </div>
   </div>
@@ -17,6 +18,8 @@
 
 <script>
 import axios from 'axios'
+
+console.log(axios)
 
 export default{
   name: 'GetStudents',
@@ -27,12 +30,33 @@ export default{
     }
   },
   created(){
-    axios.get('https://localhost:5001/api/Student/GetStudents')
+    axios.get('https://localhost:7186/api/Student/GetStudents')
     .then(responce => {
       this.student = responce.data
       console.log(responce)
     })
     
+  },
+  methods: {
+    Plus10PointsStudent() {
+      axios.put('https://localhost:7186/api/Student/Plus10PointsStudent',{
+        'Id':3
+      }).then(function(res){
+        console.log(res)
+      }).catch(function(error){
+        console.log(error)
+      })
+    },
+    AddStudent(){
+      axios.post('https://localhost:7186/api/Student/AddStudent',{
+        StudentName:"Fedor",
+        Points: 10
+      }).then(function(res){
+        console.log(res)
+      }).catch(function(error){
+        console.log(error)
+      })
+    }
   }
 }
 
@@ -74,6 +98,7 @@ export default{
   padding-top: 15px;
   padding-bottom: 15px;
   margin-top: 15px;
+  box-shadow:3px 3px 3px darkgrey;
 }
 .students-item{
   
@@ -106,10 +131,8 @@ export default{
   border: 1px solid #c58bf2;
   background-color: #eea4ce;
   margin-right: 15px;
-  
-  
-  
 }
+
 
 
 
