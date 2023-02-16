@@ -1,18 +1,42 @@
 <template>
-  <div class="head">
-    <h2>Байтиксы студентов</h2>
-    <button class="AddStudent" @click="AddStudent">+</button>
+<div class="first-head-mom">
+  <div class="first-head"> </div>
+</div>
+<div class="body-mom">
+  <div class="left-mom">
+  
   </div>
-
-  <div class="students">
-    <div class="students-item" v-for="value in student" :key="value.student">
-    <div class="students-item_name">
-      <h3>{{ value.studentName }}</h3>
+  <div class="body">
+    <div class="big-head">
+      <div class="head">
+        <h2>Байтиксы студентов</h2>
+        <button class="AddStudent" @click="AddStudent">+</button>
+      </div>
     </div>
-    <button class="students-item_plus10" @click="Plus10PointsStudent">+10B</button>
-    <span class="students-item_points">{{value.points}}</span>
+      
+    <div class="big-student">
+      <div class="students">
+          <div class="students-item"  v-for="value in student" :key="value.student" >
+            <div class="students-item_name">
+              <h4>{{ value.studentName }}</h4>
+            </div>
+            <div class="students-item_plus10">
+              <button class="students-item_plus10-btn" @click="Plus10PointsStudent(value.id)">+10B</button>
+              <span class="students-item_points">{{value.points}}</span>
+              <button class="deleteStudent" @click="DeleteStudent(value.id)">×</button>
+            </div>
+          </div>
+        
+      </div>
+      <div class="UpdateStudent">
+        <input class="editName" > <h4>{{ studentName }}</h4>
+        <input class="editPoint"> <h4>{{ points }}</h4>
+        <button class="editStudentBtn"><h4>Сохранить</h4></button>
+      </div>
     </div>
   </div>
+  
+</div>
 
 </template>
 
@@ -26,29 +50,38 @@ export default{
   data(){
     return{
       student:[],
-      errors:[]
+      errors:[],
+      Id:""
+      
     }
   },
   created(){
-    axios.get('https://localhost:7186/api/Student/GetStudents')
-    .then(responce => {
-      this.student = responce.data
-      console.log(responce)
-    })
-    
+    this.GetStudent();
   },
   methods: {
-    Plus10PointsStudent() {
-      axios.put('https://localhost:7186/api/Student/Plus10PointsStudent',{
-        'Id':3
-      }).then(function(res){
+    GetStudent(){
+      axios.get('https://localhost:7186/api/Student/GetStudents')
+    .then(responce => {
+      this.student = responce.data
+    })
+    },
+    Plus10PointsStudent(id) {
+      let date = new Date();
+      axios.put("https://localhost:7186/api/Student/Plus10PointsStudent/"+id,{
+        id: 0,
+        studentName: "string",
+        points: 0,
+        lastDateUpdatePoints: date
+      })
+      .then(function(res){
         console.log(res)
       }).catch(function(error){
         console.log(error)
       })
+      this.GetStudent();
     },
     AddStudent(){
-      axios.post('https://localhost:7186/api/Student/AddStudent',{
+      axios.post("https://localhost:7186/api/Student/AddStudent",{
         StudentName:"Fedor",
         Points: 10
       }).then(function(res){
@@ -56,6 +89,20 @@ export default{
       }).catch(function(error){
         console.log(error)
       })
+
+      this.GetStudent();
+
+    },
+    DeleteStudent(id){
+      axios.delete("https://localhost:7186/api/Student/DeleteStudent/"+id)
+      .then(function(res){
+        console.log(res)
+      }).catch(function(error){
+        console.log(error)
+      })
+
+      this.GetStudent();
+      
     }
   }
 }
@@ -71,9 +118,77 @@ export default{
   padding-left: 30px;
   padding-right: 30px;
 }
+.first-head-mom{
+  display: flex;
+  justify-content: center;
+}
+.first-head{
+  width: 100%;
+  height: 120px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #1d1617;
+  font-family: "Roboto";
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+}
+.body-mom{
+  display: flex;
+  justify-content: left;
+}
+.body{
+  width: 100%;
+}
+.left-mom{
+  width: 70px;
+  height: 600px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #1d1617;
+  font-family: "Roboto";
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  margin-right: 15px;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+}
+.big-head{
+  display: flex;
+  justify-content: center;
+  
+}
+.big-student{
+  display: flex;
+  justify-content: center;
+  
+  
+}
+.AddStudent{
+  text-align: center;
+  text-justify: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin: 0 0 0 auto;
+  background: linear-gradient(45deg, #92a3fd, #9dceff);
+  border: 0px;
+  
+}
+.AddStudent:hover {
+  background: linear-gradient(45deg, #c58bf2, #eea4ce);
+  box-shadow: 0px 0px 10px 5px #e09bda;
+}
 .head{
   width: 100%;
-  max-width: 800px;
+  max-width: 1920px;
   height: 80px;
   border-radius: 20px;
   background-color: #ffffff;
@@ -84,11 +199,13 @@ export default{
   align-items: center;
   padding-left: 15px;
   padding-right: 15px;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+  
 }
 
 .students{
   width: 100%;
-  max-width: 800px;
+  max-width: 1920px;
   background-color: #ffffff;
   border-radius: 20px;
   justify-content: left;
@@ -98,11 +215,9 @@ export default{
   padding-top: 15px;
   padding-bottom: 15px;
   margin-top: 15px;
-  box-shadow:3px 3px 3px darkgrey;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
 }
 .students-item{
-  
-  border: 1px solid #c58bf2;
   border-radius: 20px;
   padding-left: 15px;
   padding-right: 15px;
@@ -113,27 +228,92 @@ export default{
   display: flex;
   align-items: center;
   
+  box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+}
+.students-item:hover {
+  background-color: #f7f8f8;
 }
 .students-item_name{
-  margin-right: 15px;
+  
 }
 .students-item_points{
-  flex: 0 0 80px;
+  width: 100px;
   text-align: right;
-  margin-right: 0px;
-  
-
 }
 .students-item_plus10{
+  margin: 0 0 0 auto;
+  
+}
+.students-item_plus10-btn{
   width: 50px;
   height: 30px;
   border-radius: 20px;
-  border: 1px solid #c58bf2;
-  background-color: #eea4ce;
+  background: linear-gradient(45deg, #92a3fd, #9dceff);
+  border: 0px;
   margin-right: 15px;
 }
+.students-item_plus10-btn:hover {
+  box-shadow: 0px 0px 10px 5px #e09bda;
+  background: linear-gradient(45deg, #c58bf2, #eea4ce);
+}
+.deleteStudent{
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #92a3fd, #9dceff);
+  border: 0px;
+  margin-left: 15px;
+}
+.deleteStudent:hover {
+  box-shadow: 0px 0px 10px 5px #e09bda;
+  background: linear-gradient(45deg, #c58bf2, #eea4ce);
+}
+.UpdateStudent{
+  width:50%;
+  height: 600px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #1d1617;
+  font-family: "Roboto";
+  
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
 
+  margin-top: 15px;
+  
+  margin-left: 15px;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+}
+.editName{
+  width: 100%;
+  height: 60px;
+  margin-top: 30px;
+  border-radius: 20px;
+  border: 0px;
+  box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+}
 
+.editPoint{
+  width: 100%;
+  height: 60px;
+  margin-top: 15px;
+  border-radius: 20px;
+  border: 0px;
+  box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+}
 
+.editStudentBtn{
+  width: 100%;
+  height: 60px;
+  margin-top: 15px;
+  border-radius: 20px;
+  border: 0px;
+  background: linear-gradient(45deg, #92a3fd, #9dceff);
+}
+.editStudentBtn:hover {
+  box-shadow: 0px 0px 10px 5px #e09bda;
+  background: linear-gradient(45deg, #c58bf2, #eea4ce);
+}
 
 </style>
