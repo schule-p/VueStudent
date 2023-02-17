@@ -62,8 +62,8 @@ export default{
     this.GetStudent();
   },
   methods: {
-    GetStudent(){
-      axios.get('https://localhost:7186/api/Student/GetStudents')
+    async GetStudent(){
+      await axios.get('https://localhost:7186/api/Student/GetStudents')
     .then(responce => {
       this.student = responce.data
     })
@@ -75,9 +75,9 @@ export default{
       //this.EditId = 4;
       this.GetStudent();
     },
-    UpdateStudent(){
+    async UpdateStudent(){
       let date = new Date();
-      axios.put("https://localhost:7186/api/Student/UpdateStudent/"+this.EditId,{
+      await axios.put("https://localhost:7186/api/Student/UpdateStudent/"+this.EditId,{
         id: this.EditId,
         studentName: this.Name,
         points: this.StudentsPoints,
@@ -90,9 +90,9 @@ export default{
       })
       this.GetStudent();
     },
-    Plus10PointsStudent(id) {
+    async Plus10PointsStudent(id) {
       let date = new Date();
-      axios.put("https://localhost:7186/api/Student/Plus10PointsStudent/"+id,{
+      await axios.put("https://localhost:7186/api/Student/Plus10PointsStudent/"+id,{
         id: 0,
         studentName: "string",
         points: 0,
@@ -105,12 +105,12 @@ export default{
       })
       this.GetStudent();
     },
-    AddStudent(){
+    async AddStudent(){
       if (this.Points === "" || this. StudentName === ""){
         return false
       }
       
-      axios.post("https://localhost:7186/api/Student/AddStudent",{
+      await axios.post("https://localhost:7186/api/Student/AddStudent",{
         StudentName: this.Name,
         Points: this.StudentsPoints
       }).then(function(res){
@@ -124,8 +124,8 @@ export default{
       this.Name = "";
       this.StudentsPoints = "";
     },
-    DeleteStudent(id){
-      axios.delete("https://localhost:7186/api/Student/DeleteStudent/"+id)
+    async DeleteStudent(id){
+      await axios.delete("https://localhost:7186/api/Student/DeleteStudent/"+id)
       .then(function(res){
         console.log(res)
       }).catch(function(error){
@@ -263,9 +263,7 @@ export default{
 .students-item:hover {
   background-color: #f7f8f8;
 }
-.students-item_name{
-  
-}
+
 .students-item_points{
   width: 100px;
   text-align: right;
