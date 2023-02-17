@@ -10,13 +10,13 @@
     <div class="big-head">
       <div class="head">
         <h2>Байтиксы студентов</h2>
-        <button class="AddStudent" @click="AddStudent">+</button>
+        
       </div>
     </div>
       
     <div class="big-student">
       <div class="students">
-          <div class="students-item"  v-for="value in student" :key="value.student" >
+          <div class="students-item"  v-for="value in student" :key="value.student" @click="EditStudent(value)">
             <div class="students-item_name">
               <h4>{{ value.studentName }}</h4>
             </div>
@@ -29,9 +29,11 @@
         
       </div>
       <div class="UpdateStudent">
-        <input class="editName" > <h4>{{ studentName }}</h4>
-        <input class="editPoint"> <h4>{{ points }}</h4>
-        <button class="editStudentBtn"><h4>Сохранить</h4></button>
+        <input class="editName" v-model="Name" placeholder="Имя"> <h4>{{ studentName }}</h4>
+        <input class="editPoint" v-model="StudentsPoints" placeholder="Байтики"> <h4>{{ points }}</h4>
+        <button class="saveStudentChangeBtn" @click="UpdateStudent()"><h4>Сохранить</h4></button>
+        <button class="addStudentBtn" @click="AddStudent"><h4>Добавить</h4></button>
+        
       </div>
     </div>
   </div>
@@ -51,8 +53,9 @@ export default{
     return{
       student:[],
       errors:[],
-      Id:""
-      
+      Id:"",
+      Points:0,
+      StudentName:"Fedor"
     }
   },
   created(){
@@ -64,6 +67,28 @@ export default{
     .then(responce => {
       this.student = responce.data
     })
+    },
+    EditStudent(value){
+      this.Name = value.studentName;
+      this.StudentsPoints = value.points;
+      this.EditId = value.id;
+      //this.EditId = 4;
+      this.GetStudent();
+    },
+    UpdateStudent(){
+      let date = new Date();
+      axios.put("https://localhost:7186/api/Student/UpdateStudent/"+this.EditId,{
+        id: this.EditId,
+        studentName: this.Name,
+        points: this.StudentsPoints,
+        lastDateUpdatePoints: date
+      })
+      .then(function(res){
+        console.log(res)
+      }).catch(function(error){
+        console.log(error)
+      })
+      this.GetStudent();
     },
     Plus10PointsStudent(id) {
       let date = new Date();
@@ -81,9 +106,13 @@ export default{
       this.GetStudent();
     },
     AddStudent(){
+      if (this.Points === "" || this. StudentName === ""){
+        return false
+      }
+      
       axios.post("https://localhost:7186/api/Student/AddStudent",{
-        StudentName:"Fedor",
-        Points: 10
+        StudentName: this.Name,
+        Points: this.StudentsPoints
       }).then(function(res){
         console.log(res)
       }).catch(function(error){
@@ -92,6 +121,8 @@ export default{
 
       this.GetStudent();
 
+      this.Name = "";
+      this.StudentsPoints = "";
     },
     DeleteStudent(id){
       axios.delete("https://localhost:7186/api/Student/DeleteStudent/"+id)
@@ -193,7 +224,6 @@ export default{
   border-radius: 20px;
   background-color: #ffffff;
   color: #1d1617;
-  font-family: "Roboto";
   display: flex;
   justify-content: left;
   align-items: center;
@@ -239,6 +269,7 @@ export default{
 .students-item_points{
   width: 100px;
   text-align: right;
+  
 }
 .students-item_plus10{
   margin: 0 0 0 auto;
@@ -292,6 +323,7 @@ export default{
   border-radius: 20px;
   border: 0px;
   box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+  text-indent: 5px;
 }
 
 .editPoint{
@@ -301,9 +333,10 @@ export default{
   border-radius: 20px;
   border: 0px;
   box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+  text-indent: 5px;
 }
 
-.editStudentBtn{
+.saveStudentChangeBtn{
   width: 100%;
   height: 60px;
   margin-top: 15px;
@@ -311,7 +344,19 @@ export default{
   border: 0px;
   background: linear-gradient(45deg, #92a3fd, #9dceff);
 }
-.editStudentBtn:hover {
+.saveStudentChangeBtn:hover {
+  box-shadow: 0px 0px 10px 5px #e09bda;
+  background: linear-gradient(45deg, #c58bf2, #eea4ce);
+}
+.addStudentBtn{
+  width: 100%;
+  height: 60px;
+  margin-top: 15px;
+  border-radius: 20px;
+  border: 0px;
+  background: linear-gradient(45deg, #92a3fd, #9dceff);
+}
+.addStudentBtn:hover{
   box-shadow: 0px 0px 10px 5px #e09bda;
   background: linear-gradient(45deg, #c58bf2, #eea4ce);
 }
