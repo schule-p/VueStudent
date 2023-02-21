@@ -36,8 +36,19 @@
         
       </div>
     </div>
+    <div class="transactions">
+      <div class="transaction-item" v-for="trans in transactions" :key="trans.transactions">
+        <div class="transaction-item_name">
+              <h4>{{ trans.idStudent }}</h4>
+        </div>
+        <div class="transaction-item_sum">
+          <h4>{{ trans.sum }}</h4>
+        </div>
+        
+      </div>
+      
+    </div>
   </div>
-  
 </div>
 
 </template>
@@ -52,6 +63,7 @@ export default{
   data(){
     return{
       student:[],
+      transactions:[],
       errors:[],
       Id:"",
       Points:0,
@@ -60,8 +72,16 @@ export default{
   },
   created(){
     this.GetStudent();
+    this.GetTransaction();
   },
   methods: {
+    async GetTransaction(){
+      await axios.get('https://localhost:7186/api/Transaction/GetTransactions')
+      .then(responce => {
+      this.transactions = responce.data
+    })
+    },
+
     async GetStudent(){
       await axios.get('https://localhost:7186/api/Student/GetStudents')
     .then(responce => {
@@ -359,4 +379,31 @@ export default{
   background: linear-gradient(45deg, #c58bf2, #eea4ce);
 }
 
+.transactions{
+  width: 100%;
+  max-width: 1920px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  justify-content: left;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 15px;
+  box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+}
+.transactions-item{
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 15px;
+
+  display: flex;
+  align-items: center;
+  
+  box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+}
 </style>
