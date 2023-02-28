@@ -37,12 +37,17 @@
       </div>
     </div>
     <div class="transactions">
-      <div class="transaction-item" v-for="trans in transactions" :key="trans.transactions">
+      <div class="transaction-item" v-for="trans in transactions"  :key="trans">
         <div class="transaction-item_name">
-              <h4>{{ trans.idStudent }}</h4>
+          <h4>===</h4>
+            
         </div>
         <div class="transaction-item_sum">
-          <h4>{{ trans.sum }}</h4>
+          <h4>{{ trans.student.studentName }}</h4>
+          <h4 v-if="trans.typeOfTransaction">Начисление</h4>
+          <h4 v-else>Списание</h4>
+          <h4>{{ trans.sum }}р</h4>
+          
         </div>
         
       </div>
@@ -64,6 +69,7 @@ export default{
     return{
       student:[],
       transactions:[],
+      info:[],
       errors:[],
       Id:"",
       Points:0,
@@ -78,7 +84,8 @@ export default{
     async GetTransaction(){
       await axios.get('https://localhost:7186/api/Transaction/GetTransactions')
       .then(responce => {
-      this.transactions = responce.data
+      this.transactions = responce.data,
+      this.info = responce.idStudent.student
     })
     },
 
