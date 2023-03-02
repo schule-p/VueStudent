@@ -1,0 +1,144 @@
+.big-student{
+    display: flex;
+    
+  }
+  .AddStudent{
+    text-align: center;
+    text-justify: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin: 0 0 0 auto;
+    background: linear-gradient(45deg, #92a3fd, #9dceff);
+    border: 0px;
+  }
+  .AddStudent:hover {
+    background: linear-gradient(45deg, #c58bf2, #eea4ce);
+    box-shadow: 0px 0px 10px 5px #e09bda;
+  }
+    
+  .students{
+    width: 100%;
+    max-width: 1920px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    justify-content: left;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+    box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+  }
+  .students-item{
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+  
+    display: flex;
+    align-items: center;
+    
+    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+  }
+  .students-item:hover {
+    background-color: #f7f8f8;
+  }
+  
+  .students-item_points{
+    width: 100px;
+    text-align: right;
+    
+  }
+  .students-item_plus10{
+    margin: 0 0 0 auto;
+    
+  }
+  .students-item_plus10-btn{
+    width: 50px;
+    height: 30px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #92a3fd, #9dceff);
+    border: 0px;
+    margin-right: 15px;
+  }
+  .students-item_plus10-btn:hover {
+    box-shadow: 0px 0px 10px 5px #e09bda;
+    background: linear-gradient(45deg, #c58bf2, #eea4ce);
+  }
+  .deleteStudent{
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #92a3fd, #9dceff);
+    border: 0px;
+    margin-left: 15px;
+  }
+  .deleteStudent:hover {
+    box-shadow: 0px 0px 10px 5px #e09bda;
+    background: linear-gradient(45deg, #c58bf2, #eea4ce);
+  }
+  .UpdateStudent{
+    width:50%;
+    height: 600px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #1d1617;
+    font-family: "Roboto";
+    
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+  
+    margin-top: 15px;
+    
+    margin-left: 15px;
+    box-shadow: 0px 0px 13px 7px rgba(34, 60, 80, 0.1);
+  }
+  .editName{
+    width: 100%;
+    height: 60px;
+    margin-top: 30px;
+    border-radius: 20px;
+    border: 0px;
+    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+    text-indent: 5px;
+  }
+  
+  .editPoint{
+    width: 100%;
+    height: 60px;
+    margin-top: 15px;
+    border-radius: 20px;
+    border: 0px;
+    box-shadow: 0px 0px 10px 2px rgba(34, 60, 80, 0.1);
+    text-indent: 5px;
+  }
+  
+  .saveStudentChangeBtn{
+    width: 100%;
+    height: 60px;
+    margin-top: 15px;
+    border-radius: 20px;
+    border: 0px;
+    background: linear-gradient(45deg, #92a3fd, #9dceff);
+  }
+  .saveStudentChangeBtn:hover {
+    box-shadow: 0px 0px 10px 5px #e09bda;
+    background: linear-gradient(45deg, #c58bf2, #eea4ce);
+  }
+  .addStudentBtn{
+    width: 100%;
+    height: 60px;
+    margin-top: 15px;
+    border-radius: 20px;
+    border: 0px;
+    background: linear-gradient(45deg, #92a3fd, #9dceff);
+  }
+  .addStudentBtn:hover{
+    box-shadow: 0px 0px 10px 5px #e09bda;
+    background: linear-gradient(45deg, #c58bf2, #eea4ce);
+  }
