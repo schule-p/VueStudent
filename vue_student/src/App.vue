@@ -1,5 +1,6 @@
 <template>
-  <div class="first-head-mom">
+<div class="global">
+<div class="first-head-mom">
   <div class="first-head"> 
     <div id="app">
       <test></test>
@@ -37,18 +38,22 @@
         <button class="saveStudentChangeBtn" @click="UpdateStudent()"><h4>Сохранить</h4></button>
         <button class="addStudentBtn" @click="AddStudent"><h4>Добавить</h4></button>
         
+
+
         <input class="editName" v-model="Name" placeholder="Имя"> <h4>{{ studentName }}</h4>
         <input class="editPoint" v-model="StudentsPoints" placeholder="Байтики"> <h4>{{ points }}</h4>
 
         
+        <div class="UpDownBaitics">
+          <input type="radio" id="one" value="Начисление" v-model="picked" />
+          <label for="Начисление"> Начисление </label>
 
-        <input type="radio" id="one" value="Начисление" v-model="picked" />
-        <label for="Начисление">Начисление</label>
+          <input type="radio" id="two" value="Списание" v-model="picked" />
+          <label for="Списание"> Списание </label>
 
-        <input type="radio" id="two" value="Списание" v-model="picked" />
-        <label for="Списание">Списание</label>
-
-        <button class="addStudentBtn" @click="AddTransactions"><h4>Добавить</h4></button>
+          <button class="addStudentBtn" @click="AddTransactions"><h4>Добавить</h4></button>
+        </div>
+        
 
       </div>
     </div>
@@ -64,7 +69,7 @@
     </div>
   </div>
 </div>
-
+</div>
 </template>
 
 <script>
@@ -214,5 +219,8 @@ export default{
   padding-top: 40px;
   padding-left: 30px;
   padding-right: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
 }
 </style>
